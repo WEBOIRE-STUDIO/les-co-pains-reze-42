@@ -411,6 +411,108 @@ body.theme-dark .service-row, body.theme-dark .service-row-editorial { border-co
 .hero-geometric-angled h1 { font-size: clamp(2.6rem, 6.5vw, 4.6rem); }
 @media (max-width: 860px) { .hero-geometric-angled .hero-shape-a, .hero-geometric-angled .hero-shape-b { display: none; } }
 
+/* ---------- Hero: tactile-editorial (art-directed bakery/patisserie) ----------
+   Warm paper-grain texture (a cheap repeating dot pattern, not an image
+   asset) instead of a gradient or particle canvas; a hand-stamped maker's
+   mark (a slowly rotating dashed ring around static centered text) instead
+   of a generic icon badge. The grain + stamp rotation ARE the page's motion
+   — no WebGL layered on top (see artDirection.js). */
+.hero-tactile-editorial {
+  position: relative; padding: 150px 24px 110px; overflow: hidden;
+  background: var(--bg-light);
+}
+.hero-grain {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image: radial-gradient(rgba(0,0,0,.05) 1px, transparent 1px);
+  background-size: 3px 3px;
+  opacity: .6;
+}
+.hero-tactile-editorial .hero-inner {
+  position: relative; z-index: 1; max-width: 1240px;
+  display: flex; align-items: center; justify-content: space-between; gap: 48px;
+}
+.hero-tactile-text { max-width: 640px; }
+.hero-tactile-heading {
+  font-size: clamp(2.8rem, 7.6vw, 6.2rem); font-weight: 700; letter-spacing: -0.02em;
+  line-height: 1.02; font-optical-sizing: auto;
+}
+.hero-tactile-editorial .hero-subhead { margin: 22px 0 0; max-width: 46ch; }
+.hero-tactile-stamp {
+  position: relative; flex-shrink: 0; width: 168px; height: 168px;
+  display: flex; align-items: center; justify-content: center; color: var(--primary);
+}
+.hero-tactile-stamp .stamp-ring {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  animation: stamp-rotate 44s linear infinite;
+}
+.hero-tactile-stamp .stamp-center {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  font-family: var(--font-heading); text-transform: uppercase; letter-spacing: .12em;
+  font-size: .78rem; font-weight: 600; color: var(--primary); text-align: center;
+}
+.hero-tactile-stamp .stamp-glyph { font-size: 1.1rem; color: var(--accent); }
+@keyframes stamp-rotate { to { transform: rotate(360deg); } }
+@media (max-width: 780px) {
+  .hero-tactile-editorial { padding: 120px 20px 80px; }
+  .hero-tactile-editorial .hero-inner { flex-direction: column; align-items: flex-start; gap: 32px; }
+  .hero-tactile-stamp { width: 120px; height: 120px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-tactile-stamp .stamp-ring { animation: none; }
+}
+
+/* Bakery menu-board services list — reuses the existing numbered-list
+   layout markup (serviceLayouts.js) with a bespoke tactile treatment:
+   dotted leader rule instead of a card border, warm serif index numerals. */
+body.artdir-artisan-bakery-editorial .service-list-editorial { max-width: 720px; }
+body.artdir-artisan-bakery-editorial .service-row-editorial {
+  display: flex; align-items: baseline; gap: 20px; padding: 18px 0;
+  border-bottom: 1px dotted var(--border);
+}
+body.artdir-artisan-bakery-editorial .service-index {
+  font-family: var(--font-heading); color: var(--accent); font-size: 1.1rem; font-weight: 600;
+}
+body.artdir-artisan-bakery-editorial .service-row-editorial h3 { font-weight: 500; }
+
+/* ---------- Hero: botanical-atelier (art-directed florist/floral studio) ----------
+   Layered organic silhouette shapes (SVG, not WebGL) with soft blur for
+   depth, generous negative space, and a large expressive heading — the
+   last word renders as an italic serif accent instead of a generic eyebrow
+   pill doing all the "this is elegant" work alone. Two of the three shapes
+   drift very slowly via CSS; disabled entirely under reduced-motion. */
+.hero-botanical-atelier {
+  position: relative; padding: 170px 24px 130px; overflow: hidden; background: var(--bg-light);
+}
+.hero-botanical-shapes { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.botanical-shape { position: absolute; fill: var(--primary); }
+.botanical-shape path { fill: inherit; }
+.botanical-shape.shape-a { width: 34vw; max-width: 460px; top: -8%; right: -6%; opacity: .16; filter: blur(1px); animation: botanical-drift-a 26s ease-in-out infinite; }
+.botanical-shape.shape-b { width: 22vw; max-width: 320px; bottom: -6%; left: -4%; fill: var(--accent); opacity: .18; filter: blur(2px); animation: botanical-drift-b 32s ease-in-out infinite; }
+.botanical-shape.shape-c { width: 16vw; max-width: 220px; top: 18%; left: 8%; opacity: .1; filter: blur(2px); }
+@keyframes botanical-drift-a { 0%, 100% { transform: translate(0,0) rotate(0deg); } 50% { transform: translate(-1.5%, 2%) rotate(4deg); } }
+@keyframes botanical-drift-b { 0%, 100% { transform: translate(0,0) rotate(0deg); } 50% { transform: translate(2%, -1.5%) rotate(-3deg); } }
+.hero-botanical-inner { position: relative; z-index: 1; max-width: 780px; }
+.hero-botanical-heading {
+  font-size: clamp(2.8rem, 7.2vw, 5.6rem); font-weight: 600; letter-spacing: -0.01em; line-height: 1.05;
+}
+.hero-botanical-heading .split-word:last-of-type { font-style: italic; color: var(--primary); font-weight: 500; }
+.hero-botanical-atelier .hero-subhead { max-width: 48ch; }
+@media (max-width: 780px) {
+  .hero-botanical-atelier { padding: 130px 20px 90px; }
+  .botanical-shape.shape-a, .botanical-shape.shape-b { width: 55vw; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .botanical-shape.shape-a, .botanical-shape.shape-b { animation: none; }
+}
+
+/* Florist typography-grid services — bespoke organic treatment: a small
+   leaf-glyph bullet instead of the default card/typo styling elsewhere. */
+body.artdir-botanical-atelier-organic .service-typo-grid { gap: 14px 32px; }
+body.artdir-botanical-atelier-organic .service-typo-item {
+  font-family: var(--font-heading); font-size: clamp(1.2rem, 2.4vw, 1.6rem); font-weight: 500;
+}
+body.artdir-botanical-atelier-organic .service-typo-item::before { content: '❁ '; color: var(--accent); }
+
 /* ---------- Hero: dark-glass (dark-premium / cinematic-editorial) ----------
    Oversized type sits DIRECTLY on the image — no floating card. The image
    wipes into view via an animated clip-path (a real mask reveal, not an
